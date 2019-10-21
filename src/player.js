@@ -1,20 +1,28 @@
-export default class Player {
-    constructor (gameWidth, gameHeight){
 
-        this.height = 50 
-        this.width = 25
+
+export default class Player {
+    constructor (game){
+
+        this.playerLeft = document.getElementById("player_left")
+        this.playerRight = document.getElementById("player_right")
+
+        this.height = 115 
+        this.width = 45
+
+        this.game = game
 
         this.speed = 0
-        this.maxSpeed = 5
+        this.maxSpeed = 75 
 
-        this.jumpSpeed = 0;
-        this.maxJumpSpeed = 15
+        this.a = 0;
+        this.maxJumpSpeed = 9.81
         this.startJumpSpeed = 0;
         this.jumping = false;
+        this.jumpStartTime = 0
 
         this.position = {
             x: 10,
-            y: gameHeight - this.height
+            y: game.gameHeight - this.height - 20
         }
 
         
@@ -22,7 +30,11 @@ export default class Player {
 
 
     draw(ctx){
-        ctx.fillRect(this.position.x, this.position.y, this.width, this.height)
+        if(this.speed < 0)
+            ctx.drawImage(this.playerLeft, this.position.x, this.position.y, this.width, this.height)
+        else
+            ctx.drawImage(this.playerRight, this.position.x, this.position.y, this.width, this.height)
+        
     }
 
     stop(){
@@ -40,22 +52,24 @@ export default class Player {
         if(this.jumping) return;
         if(jumpSpeed > this.maxJumpSpeed) this.startJumpSpeed = this.maxJumpSpeed
         else this.startJumpSpeed = jumpSpeed
-        this.jumpSpeed = -this.startJumpSpeed 
+        this.a = -this.startJumpSpeed
         this.jumping = true
+        this.jumpStartTime = Math.round(new Date().getTime()) + 1000
     } 
 
     update(deltaTime){
         if(!deltaTime) return;
 
-        this.position.x += this.speed
+        this.position.x += this.speed / deltaTime
 
         if(this.jumping){
-            this.position.y += this.jumpSpeed
-            this.jumpSpeed++;
-            if(this.jumpSpeed > this.startJumpSpeed) this.jumping = false
+            const currentTime = Math.round(new Date().getTime())
+            let lengthToAdd = Math.round(Math.pow((currentTime - this.jumpStartTime)/300, 2))
+            this.position.y += (currentTime === this.jumpStartTime) ? 0 : (currentTime < this.jumpStartTime ) ? -lengthToAdd : lengthToAdd
+            if(this.game.detectCollisionWithLevel()) this.jumping = false 
         }
 
-        if(this.position.x < 0) this.position.x = 0;
+        if(this.position.x < 0) this.position.x = 0; 
 
 
     }

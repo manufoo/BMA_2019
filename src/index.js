@@ -1,32 +1,28 @@
-import Player from "./player";
-import InputHandler from "./inputHandler";
+import Game from "./game";
 
 
 let canvas = document.getElementById('game')
-let cxt = canvas.getContext("2d");
+let ctx = canvas.getContext("2d");
 
 
 const GAME_WIDTH = 1000
 const GAME_HEIGHT = 800
 
 
-let player = new Player(GAME_WIDTH, GAME_HEIGHT)
-new InputHandler(player);
+let game = new Game(GAME_WIDTH, GAME_HEIGHT)
 
 let lastTime = 0
-
 
 function gameLoop(timestamp) {
     
     let deltaTime = timestamp - lastTime;
     lastTime = timestamp; 
     
-    cxt.clearRect(0,0,GAME_WIDTH, GAME_HEIGHT)
+    ctx.clearRect(0,0,GAME_WIDTH, GAME_HEIGHT)
 
-    player.update(deltaTime)
+    game.update(deltaTime)
 
-    player.draw(cxt)
-
+    game.draw(ctx)
 
     requestAnimationFrame(gameLoop)
 }
