@@ -1,23 +1,6 @@
 {
-  "name": "BMA_2019",
-  "version": "1.0.0",
-  "main": "index.js",
-  "repository": "https://github.com/laesse/BMA_2019.git",
-  "author": "laesse <lars.volkheimer@gmx.ch>",
-  "license": "MIT",
-  "scripts": {
-    "start": "parcel index.html --open",
-    "build": "parcel build index.html"
-  },
   "dependencies": {
-    "@babel/plugin-proposal-class-properties": "^7.5.5",
-    "src": "^1.1.2"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.0.0-0",
-    "@babel/preset-env": "^7.6.3",
-    "@babel/preset-react": "^7.6.3",
-    "babel-plugin-transform-class-properties": "^6.24.1",
-    "parcel-bundler": "^1.6.1"
+    "http-server": "^0.11.1",
+    "phaser": "3.20.1"
   }
 }
