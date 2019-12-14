@@ -21,6 +21,7 @@ class Bedroom extends Phaser.Scene {
     }
 
 
+
     create() {
         this.map = this.add.tilemap('bedroom');
         var tileset1 = this.map.addTilesetImage('int3', 'gameTiles1');
@@ -35,14 +36,35 @@ class Bedroom extends Phaser.Scene {
         // Character
         this.player = this.physics.add.sprite(325, 325, "player1", "assets/playerSprite.png");
         const spawnPoint = this.map.findObject("Objects", obj => obj.name === "Spawn Point");
-        this.player = this.physics.add.sprite(spawnPoint.x, spawnPoint.y, "player1", "assets/playerSprite.png");
+        // this.player = this.physics.add.sprite(spawnPoint.x, spawnPoint.y, "player1", "assets/playerSprite.png");
 
         // has to be set in Tiled
-        this.topLayer$.setCollisionByProperty({ collides: true });
+        // this.topLayer.setCollisionByProperty({ collides: true });
+
+        this.player.body.collideWorldBounds = true;
+
+        this.moveKeys = this.input.keyboard.addKeys('W,S,A,D');
 
     }
 
     update(){
+
+         //charactermovment
+        this.player.body.velocity.y = 0;
+        this.player.body.velocity.x = 0;
+        //
+        if(this.moveKeys.W.isDown){
+            this.player.body.velocity.y -= 150;
+        }
+        if(this.moveKeys.S.isDown){
+            this.player.body.velocity.y += 150;
+        }
+        if(this.moveKeys.A.isDown){
+            this.player.body.velocity.x -= 150;
+        }
+        if(this.moveKeys.D.isDown){
+            this.player.body.velocity.x += 150;
+        }
 
     }
 
