@@ -12,8 +12,8 @@ var config = {
     extend: {
         moveKeys: null,
         player: null,
+        interactionKey : null
     },
-    k: null
 
 };
 
