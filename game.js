@@ -12,7 +12,9 @@ var config = {
     extend: {
         moveKeys: null,
         player: null,
-    }
+        interactionKey : null
+    },
+
 };
 
 var game = new Phaser.Game(config);
