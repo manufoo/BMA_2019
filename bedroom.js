@@ -11,7 +11,8 @@ class Bedroom extends Phaser.Scene {
         this.load.image('gameTiles3', 'assets/interior.png');
         this.load.image('gameTiles4', 'assets/tiles.png');
         this.load.image('gameTiles5', 'assets/tv.png');
-        this.load.tilemapTiledJSON('bedroom', 'assets/bma-map.json');
+        this.load.image('gameTiles6', 'assets/pc.png');
+        this.load.tilemapTiledJSON('bedroom', 'assets/bma-mapC.json');
         this.load.spritesheet('player1',
             'assets/playerSprite.png',
             {frameWidth: 32, frameHeight: 36}
@@ -27,18 +28,20 @@ class Bedroom extends Phaser.Scene {
         var tileset2 = this.map.addTilesetImage('interieor2', 'gameTiles2');
         var tileset3 = this.map.addTilesetImage('interior', 'gameTiles3');
         var tileset4 = this.map.addTilesetImage('BMA-Game', 'gameTiles4');
-        this.bottomLayer = this.map.createStaticLayer('bottomLayer', [tileset4, tileset2, tileset3, tileset1]);
-        this.middleLayer = this.map.createStaticLayer('middleLayer', [tileset4, tileset2, tileset3, tileset1]);
-        this.topLayer = this.map.createStaticLayer('topLayer', [tileset4, tileset2, tileset3, tileset1]);
-        this.topLayer.setCollision(259);
+        var tileset5 = this.map.addTilesetImage('tv', 'gameTiles5');
+        var tileset6 = this.map.addTilesetImage('pc', 'gameTiles6');
+        this.bottomLayer = this.map.createStaticLayer('Floor layer', [tileset4, tileset2, tileset3, tileset1]);
+        this.middleLayer1 = this.map.createStaticLayer('carpet', [tileset4, tileset2, tileset3, tileset1]);
+        this.middleLayer2 = this.map.createDynamicLayer('edge', [tileset4, tileset2, tileset3, tileset1]);
+        this.topLayer = this.map.createDynamicLayer('blocked', [tileset4, tileset2, tileset3, tileset1, tileset5, tileset6]);
         // Character
         this.player = this.physics.add.sprite(325, 325, "player1", "assets/playerSprite.png");
-        const spawnPoint = this.map.findObject("Objects", obj => obj.name === "Spawn Point");
-        // this.player = this.physics.add.sprite(spawnPoint.x, spawnPoint.y, "player1", "assets/playerSprite.png"); TODO is this needed
-
-        // has to be set in Tiled
-        // this.topLayer.setCollisionByProperty({ collides: true }); TODO seems like its not working
-
+        //collision with wall & Objects
+        this.topLayer.setCollisionByProperty({ collides: true });
+        this.topLayer.setCollisionBetween(1,9999);
+        this.physics.add.collider(this.player, this.topLayer);
+        this.middleLayer2.setCollisionBetween(1,9999);
+        this.physics.add.collider(this.player, this.middleLayer2);
 
         this.player.body.collideWorldBounds = true;
 
@@ -47,10 +50,10 @@ class Bedroom extends Phaser.Scene {
     }
 
     update() {
-
         //charactermovment
         this.player.body.velocity.y = 0;
         this.player.body.velocity.x = 0;
+
         //
         if (this.moveKeys.W.isDown || this.moveKeys.UP.isDown) {
             this.player.body.velocity.y -= 150;
