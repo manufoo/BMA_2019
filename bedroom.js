@@ -14,7 +14,7 @@ class Bedroom extends Phaser.Scene {
         this.load.image('gameTiles6', 'assets/pc.png');
         this.load.tilemapTiledJSON('bedroom', 'assets/bma-mapC.json');
         this.load.spritesheet('player1',
-            'assets/playerSprite.png',
+            'assets/playerSpriteGreen.png',
             {frameWidth: 32, frameHeight: 36}
         );
 
@@ -31,7 +31,7 @@ class Bedroom extends Phaser.Scene {
         var tileset5 = this.map.addTilesetImage('tv', 'gameTiles5');
         var tileset6 = this.map.addTilesetImage('pc', 'gameTiles6');
         this.bottomLayer = this.map.createStaticLayer('Floor layer', [tileset4, tileset2, tileset3, tileset1]);
-        this.middleLayer1 = this.map.createStaticLayer('carpet', [tileset4, tileset2, tileset3, tileset1]);
+        this.middleLayer1 = this.map.createStaticLayer('carpet', [tileset4, tileset2, tileset3, tileset1, tileset6]);
         this.middleLayer2 = this.map.createDynamicLayer('edge', [tileset4, tileset2, tileset3, tileset1]);
         this.topLayer = this.map.createDynamicLayer('blocked', [tileset4, tileset2, tileset3, tileset1, tileset5, tileset6]);
         // Character
@@ -45,7 +45,7 @@ class Bedroom extends Phaser.Scene {
 
         this.player.body.collideWorldBounds = true;
 
-        this.moveKeys = this.input.keyboard.addKeys('W,S,A,D,UP,DOWN,LEFT,RIGHT');
+        this.moveKeys = this.input.keyboard.addKeys('W,S,A,D,UP,DOWN,LEFT,RIGHT,cursor');
         this.interactionKey = this.input.keyboard.addKeys('SPACE');
     }
 
