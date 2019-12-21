@@ -35,7 +35,7 @@ class Bedroom extends Phaser.Scene {
         this.middleLayer2 = this.map.createDynamicLayer('edge', [tileset4, tileset2, tileset3, tileset1]);
         this.topLayer = this.map.createDynamicLayer('blocked', [tileset4, tileset2, tileset3, tileset1, tileset5, tileset6]);
         // Character
-        this.player = this.physics.add.sprite(325, 325, "player1", "assets/playerSprite.png");
+        this.player = this.physics.add.sprite(325, 325, "player1", "assets/playerSpriteGreen.png");
         //collision with wall & Objects
         this.topLayer.setCollisionByProperty({ collides: true });
         this.topLayer.setCollisionBetween(1,9999);
